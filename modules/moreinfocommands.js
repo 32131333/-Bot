@@ -125,7 +125,7 @@ module.exports = async function (client, modules, waitUntil) {
 				description: "Очень бесполезный бот, как и сам создатель\nЕсли вы не понимаете смысл моего существования, то короче, вы не одни",
 				thumbnail: embedThumb(),
 				fields: [
-					{name: 'О боте', value: `Я бот, написанный на Node.js ${process.version}. Использую библиотеку discord.js. Я был создан <t:${Math.floor(bot.user.createdTimestamp/1000)}:R>`, inline: false},
+					{name: 'О боте', value: `Я бот, написанный на Node.js ${process.version}. Использую библиотеку discord.js. Я был создан <t:${Math.floor(client.user.createdTimestamp/1000)}:R>`, inline: false},
 					{name: 'Моя работа', value: `Моя цель это отвечать короче каму попало, даже ботам. Также есть какие-никакие команды`, inline: false},
 					{name: 'Меня можно программно заткнуть', value: `Нет. Не рекомендую давать боту права администратора на нормальном сервере`, inline: false},
 					{name: 'Я ИИ?', value: `Ох, нет. Но кстати, есть команда "/chat", но в стабильности не до конца уверен.`, inline: false},
@@ -157,7 +157,7 @@ module.exports = async function (client, modules, waitUntil) {
 			await interaction.reply({
 				embeds: [
 					{
-						title: `Статистика ${bot.user.tag}`,
+						title: `Статистика ${client.user.tag}`,
 						description: `<:nodejs:924554212891824159> Node.js ${process.version}\nМой пинг: ${client.ws.ping}ms\nЗапущен <t:${runnedAt}> (<t:${runnedAt}:R>)\n\nБольше никакой информации неиту :<`,
 						thumbnail: embedThumb(),
 						color: embedColor
@@ -170,4 +170,5 @@ module.exports = async function (client, modules, waitUntil) {
 
 
 	return func;
+
 };
