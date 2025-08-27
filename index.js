@@ -26,11 +26,15 @@ let clientsOptions = JSON.parse(process.env.options);
 
 
 globalThis.clients = {};
+
+console.log(`Всего клиентов должно быть запущено: ${clientsOptions.length}`);
 clientsOptions.forEach(opt=>{
 	const bot = client(opt);
 	bot.once("clientReady", ()=>{ globalThis.clients[bot.user.id] = bot });
-	
+
+	console.log(`Ранним бота по токену ${opt.token} :3`);
 	bot.login(opt.token);
 });
+
 
 if (process.env.PORT) require("./uptimeserver.js")(process.env.PORT);
