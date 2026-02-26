@@ -8,9 +8,10 @@ module.exports = async function (client, modules, waitUntil) {
 		{ activities: [{ type: 4, state: "брр брр патабим", name: "fox" }], status: "online" },
 		{ activities: [{ type: 4, state: "скибиди", name: "fox" }], status: "dnd" },
 		{ activities: [{ type: 4, state: "OPEN THE DOOR", name: "squid" }], status: "online" },
-		{ activities: [{ type: 4, state: "Спасибо, что я есть", name: "Мне нравятся лисицы" }], status: "online" },
 		{ activities: [{ type: 4, state: "Я забыл", name: "fox" }], status: "online" },
-		{ activities: [{ type: 4, state: `🌟 ${client.guilds.cache.map(x=>x).length} серверов!`, name: "fox" }], status: "online" }
+		{ activities: [{ type: 4, state: `🌟 ${client.guilds.cache.map(x=>x).length} серверов!`, name: "fox" }], status: "online" },
+		{ activities: [{ type: 4, state: "хрю" }], status: "dnd" },
+		{ activities: [], status: "offline" }
 	]);
 	
 	const change = ()=>{
