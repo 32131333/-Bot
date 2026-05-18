@@ -21,6 +21,11 @@ module.exports = async function (client, modules, waitUntil) {
 	const commands = await waitUntil(()=>modules.commands);
 	const { embedColor, embedThumb } = await waitUntil(()=>modules.randomutils);
 
+	/*
+		message, temperature, top_p,
+                presence_penalty, frequency_penalty,
+                seed
+	*/
 	commands.registerNewCommand({
 		command: new SlashCommandBuilder()
 			.setName("chat")
@@ -32,6 +37,45 @@ module.exports = async function (client, modules, waitUntil) {
 					.setName("тегст")
 					.setDescription("да")
 					.setRequired(true)
+			)
+			.addNumberOption(
+				new SlashCommandNumberOption()
+					.setName("тимпиратура")
+					.setDescription("Чем нтже знпчение, чем ответы предсказуемее")
+					.setMaxValue(2.0)
+					.setMinValue(0.0)
+					.setRequired(false)
+			)
+			.addNumberOption(
+				new SlashCommandNumberOption()
+					.setName("top_p")
+					.setDescription("Что-то аналога температуры")
+					.setMaxValue(1.0)
+					.setMinValue(0.0)
+					.setRequired(false)
+			)
+			.addNumberOption(
+				new SlashCommandNumberOption()
+					.setName("presence_penalty")
+					.setDescription("Крч используйте, если понимаити, что ета")
+					.setMaxValue(2.0)
+					.setMinValue(-2.0)
+					.setRequired(false)
+			)
+			.addNumberOption(
+				new SlashCommandNumberOption()
+					.setName("frequency_penalty")
+					.setDescription("Я незн что оно делает")
+					.setMaxValue(2.0)
+					.setMinValue(-2.0)
+					.setRequired(false)
+			)
+			.addIntegerOption(
+				new SlashCommandIntegerOption()
+					.setName("seed")
+					.setDescription("сидд")
+					.setMinValue(0)
+					.setRequired(false)
 			),
 		async execute(interaction, args) {
 			await interaction.deferReply();
@@ -39,10 +83,22 @@ module.exports = async function (client, modules, waitUntil) {
 			const chat = Chat(`${interaction.user.id}`);
 			if (chat.debounce) return await interaction.followUp("# Воу, воу!\nТы ета, падажди, пока прошлый запрос обработается");
 			
-			const message = await chat.post(args.тегст);
+			const message = await chat.post(
+				args.тегст,
+				args.тимпиратура, args.top_p,
+				args.presence_penalty, args.frequency_penalty,
+				args.seed
+			);
 			
 			if (typeof message == "string") {
-				await interaction.followUp(message+`\n\n-# Йа использовал модель ${chat.modelName}`);
+				let result = message+`\n\n-# Йа использовал модель ${chat.modelName}`;
+
+				while (result.length > 0) {
+					const t = result.slice(0,2000);
+					result = result.slice(2000);
+					await interaction.followUp(t);
+				};
+				//await interaction.followUp(message+`\n\n-# Йа использовал модель ${chat.modelName}`);
 			} else {
 				await interaction.followUp(`# О нет!\nВместо ответа ИИ-модели я получил какую-ту ошибку. Вероятно, можель не в состоянии ответить\n\n> ${message.message}`);
 			};

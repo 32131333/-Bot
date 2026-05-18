@@ -15,7 +15,10 @@ class Chat {
     this.API = Chat.API;
     this.debounce = false;
   }
-  async post(message) {
+  async post(message, temperature, top_p,
+		presence_penalty, frequency_penalty,
+		seed
+	) {
     if (this.debounce) return false;
     this.debounce = true;
     
@@ -36,8 +39,11 @@ class Chat {
             ...this.history,
             ...this.mode,
             userMessage
-          ]}
-        )
+          ],
+	  temperature, top_p,
+	  presence_penalty, frequency_penalty,
+          seed
+        })
       });
       const result = await response.json();
       this.debounce = false;
