@@ -1,4 +1,11 @@
-const { SlashCommandStringOption, SlashCommandBuilder, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
+const { 
+	SlashCommandStringOption,
+	SlashCommandBuilder,
+	InteractionContextType,
+	ApplicationIntegrationType,
+	SlashCommandNumberOption,
+	SlashCommandIntegerOption
+} = require("discord.js");
 const Chat = require("./chat.js");
 
 module.exports = async function (client, modules, waitUntil) {
